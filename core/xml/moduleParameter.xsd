@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="https://proj.5nord.org/simmit" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:simmit="https://proj.5nord.org/simmit">
+	<group name="headerInformation">
+		<sequence>
+			<element minOccurs="0" name="author" type="string"/>
+			<element default="1.0" minOccurs="0" name="version" type="string"/>
+			<element minOccurs="0" name="date" type="string"/>
+			<element minOccurs="0" name="type" type="string"/>
+			<element minOccurs="0" name="description" type="string"/>
+		</sequence>
+	</group>
+	<group name="headerInformationWithName">
+		<sequence>
+			<element name="name" type="string"/>
+			<group ref="simmit:headerInformation"/>
+		</sequence>
+	</group>
+	<complexType name="Parameter">
+		<choice maxOccurs="unbounded" minOccurs="0">
+			<group ref="simmit:simpleParameterTypes"/>
+			<element name="instance" type="simmit:referenceType"/>
+		</choice>
+	</complexType>
+	<complexType abstract="true" name="port">
+		<attribute default="" name="description"/>
+		<attribute default="byte" name="type"/>
+		<attribute name="blocksize" type="integer"/>
+		<attribute name="usedType" type="string"/>
+	</complexType>
+	<complexType name="inputPort">
+		<complexContent>
+			<extension base="simmit:port">
+				<attribute fixed="input" name="direction"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="outputPort">
+		<complexContent>
+			<extension base="simmit:port">
+				<attribute fixed="output" name="direction"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="includeFiles">
+		<sequence>
+			<element maxOccurs="unbounded" minOccurs="0" name="type" type="string"/>
+		</sequence>
+	</complexType>
+	<complexType name="parameterDefinition">
+		<sequence>
+			<group maxOccurs="unbounded" minOccurs="0" ref="simmit:complexParameterTypes"/>
+		</sequence>
+	</complexType>
+	<group name="simpleParameterTypes">
+		<choice>
+			<element name="string" type="simmit:stringParameterType"/>
+			<element name="int" type="simmit:intParameterType"/>
+			<element name="long" type="simmit:longParameterType"/>
+			<element name="byte" type="simmit:byteParameterType"/>
+			<element name="float" type="simmit:floatParameterType"/>
+			<element name="double" type="simmit:doubleParameterType"/>
+			<element name="boolean" type="simmit:booleanParameterType"/>
+		</choice>
+	</group>
+	<group name="complexParameterTypes">
+		<choice>
+			<element name="class" type="simmit:classType"/>
+			<element name="enum" type="simmit:enumerationType"/>
+			<element name="array" type="simmit:arrayType"/>
+			<element name="table" type="simmit:tableType"/>
+			<element name="dictionary" type="simmit:dictionaryType"/>
+		</choice>
+	</group>
+	<complexType name="stringParameterType">
+		<all>
+			<element name="name" type="string"/>
+			<element name="default" type="string"/>
+			<element minOccurs="0" name="description" type="string"/>
+			<element minOccurs="0" name="minLength" type="integer"/>
+			<element minOccurs="0" name="maxLength" type="integer"/>
+			<element minOccurs="0" name="length" type="integer"/>
+		</all>
+	</complexType>
+	<complexType name="intParameterType">
+		<all>
+			<element name="name" type="string"/>
+			<element name="default" type="int"/>
+			<element minOccurs="0" name="description" type="string"/>
+			<element minOccurs="0" name="minValue" type="integer"/>
+			<element minOccurs="0" name="maxValue" type="integer"/>
+		</all>
+	</complexType>
+	<complexType name="longParameterType">
+		<all>
+			<element name="name" type="string"/>
+			<element name="default" type="long"/>
+			<element minOccurs="0" name="description" type="string"/>
+			<element minOccurs="0" name="minValue" type="long"/>
+			<element minOccurs="0" name="maxValue" type="long"/>
+		</all>
+	</complexType>
+	<complexType name="byteParameterType">
+		<all>
+			<element name="name" type="string"/>
+			<element name="default" type="byte"/>
+			<element minOccurs="0" name="description" type="string"/>
+			<element minOccurs="0" name="minValue" type="byte"/>
+			<element minOccurs="0" name="maxValue" type="byte"/>
+		</all>
+	</complexType>
+	<complexType name="floatParameterType">
+		<all>
+			<element name="name" type="string"/>
+			<element name="default" type="float"/>
+			<element minOccurs="0" name="description" type="string"/>
+			<element minOccurs="0" name="minValue" type="float"/>
+			<element minOccurs="0" name="maxValue" type="float"/>
+		</all>
+	</complexType>
+	<complexType name="doubleParameterType">
+		<all>
+			<element name="name" type="string"/>
+			<element name="default" type="double"/>
+			<element minOccurs="0" name="description" type="string"/>
+			<element minOccurs="0" name="minValue" type="double"/>
+			<element minOccurs="0" name="maxValue" type="double"/>
+		</all>
+	</complexType>
+	<complexType name="booleanParameterType">
+		<all>
+			<element name="name" type="string"/>
+			<element name="default" type="boolean"/>
+			<element minOccurs="0" name="description" type="string"/>
+		</all>
+	</complexType>
+	<complexType name="enumerationType">
+		<all>
+			<element name="name" type="string"/>
+			<element name="default" type="string"/>
+			<element minOccurs="0" name="description" type="string"/>
+			<element name="members">
+				<complexType>
+					<sequence>
+						<element maxOccurs="unbounded" name="name" type="string"/>
+					</sequence>
+				</complexType>
+			</element>
+		</all>
+	</complexType>
+	<complexType name="classType">
+		<all>
+			<element name="name" type="string"/>
+			<element minOccurs="0" name="description" type="string"/>
+			<element minOccurs="0" name="members" type="simmit:Parameter">
+				<unique name="MemberName">
+					<selector xpath="members/*"/>
+					<field xpath="name"/>
+				</unique>
+			</element>
+		</all>
+	</complexType>
+	<complexType name="arrayType">
+		<sequence>
+			<element name="name" type="string"/>
+			<element name="elementType" type="string"/>
+			<group maxOccurs="2" minOccurs="0" ref="simmit:min_max_elements"/>
+			<choice>
+				<sequence minOccurs="0">
+					<element minOccurs="0" name="minSize" type="integer"/>
+					<element minOccurs="0" name="maxSize" type="integer"/>
+				</sequence>
+				<element name="size" type="integer"/>
+			</choice>
+			<element minOccurs="0" name="description" type="string"/>
+			<element name="default"/>
+		</sequence>
+	</complexType>
+	<complexType name="tableType">
+		<sequence>
+			<element name="name" type="string"/>
+			<element name="elementType" type="string"/>
+			<group maxOccurs="2" minOccurs="0" ref="simmit:min_max_elements"/>
+			<choice>
+				<sequence>
+					<element minOccurs="0" name="minCols" type="integer"/>
+					<element minOccurs="0" name="maxCols" type="integer"/>
+				</sequence>
+				<element name="anzCols" type="integer"/>
+			</choice>
+			<choice>
+				<sequence minOccurs="0">
+					<element minOccurs="0" name="minRows" type="integer"/>
+					<element minOccurs="0" name="maxRows" type="integer"/>
+				</sequence>
+				<element name="anzRows" type="integer"/>
+			</choice>
+			<element minOccurs="0" name="description" type="string"/>
+			<element name="default"/>
+		</sequence>
+	</complexType>
+	<complexType name="dictionaryType">
+		<all>
+			<element name="name" type="string"/>
+			<element name="valueType" type="string"/>
+			<element minOccurs="0" name="description" type="string"/>
+		</all>
+	</complexType>
+	<complexType name="referenceType">
+		<all>
+			<element name="name" type="string"/>
+			<element minOccurs="0" name="description" type="string"/>
+		</all>
+		<attribute name="name" type="string" use="required"/>
+		<attribute name="imprints" type="string"/>
+	</complexType>
+	<complexType mixed="true" name="string">
+		<simpleContent>
+			<extension base="string">
+				<attributeGroup ref="simmit:string_attributeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType mixed="true" name="int">
+		<simpleContent>
+			<extension base="integer">
+				<attributeGroup ref="simmit:int_attributeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType mixed="true" name="float">
+		<simpleContent>
+			<extension base="float">
+				<attributeGroup ref="simmit:float_attributeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType mixed="true" name="double">
+		<simpleContent>
+			<extension base="double">
+				<attributeGroup ref="simmit:double_attributeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType mixed="true" name="byte">
+		<simpleContent>
+			<extension base="unsignedByte">
+				<attributeGroup ref="simmit:byte_attributeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType mixed="true" name="boolean">
+		<simpleContent>
+			<extension base="boolean">
+				<attributeGroup ref="simmit:default_attributeGroup"/>
+				<attribute fixed="boolean" name="type"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType mixed="true" name="long">
+		<simpleContent>
+			<extension base="long">
+				<attributeGroup ref="simmit:long_attributeGroup"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType name="array">
+		<sequence>
+			<element maxOccurs="unbounded" name="field"/>
+		</sequence>
+		<attribute default="" name="description" type="string"/>
+		<attribute fixed="array" name="type" type="string"/>
+	</complexType>
+	<complexType name="class">
+		<all>
+			<element name="classname" type="string"/>
+			<element name="members" type="simmit:Parameter"/>
+		</all>
+		<attribute default="" name="description" type="string"/>
+		<attribute fixed="class" name="type" type="string"/>
+	</complexType>
+	<complexType mixed="true" name="enum">
+		<simpleContent>
+			<extension base="string">
+				<attribute default="" name="description" type="string"/>
+				<attribute name="elements" type="string"/>
+				<attribute fixed="enum" name="type" type="string"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType abstract="true" name="table">
+		<sequence>
+			<element maxOccurs="unbounded" name="row">
+				<complexType>
+					<complexContent>
+						<extension base="simmit:array">
+							<attribute name="pos" type="integer"/>
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+		</sequence>
+		<attribute default="" name="description" type="string"/>
+		<attribute name="elementType" type="string"/>
+		<attribute name="rows" type="integer"/>
+		<attribute name="cols" type="integer"/>
+		<attribute fixed="table" name="type" type="string"/>
+	</complexType>
+	<complexType abstract="true" name="dictionary">
+		<sequence>
+			<element maxOccurs="unbounded" name="key"/>
+		</sequence>
+		<attribute name="description" type="string"/>
+		<attribute name="valueType" type="string"/>
+		<attribute fixed="dictionary" name="type" type="string"/>
+	</complexType>
+	<attributeGroup name="default_attributeGroup">
+		<attribute name="description" type="string"/>
+	</attributeGroup>
+	<attributeGroup name="string_attributeGroup">
+		<attributeGroup ref="simmit:default_attributeGroup"/>
+		<attribute fixed="string" name="type" type="string"/>
+		<attribute name="length" type="integer"/>
+		<attribute name="minLength" type="integer"/>
+		<attribute name="maxLength" type="integer"/>
+	</attributeGroup>
+	<attributeGroup name="int_attributeGroup">
+		<attributeGroup ref="simmit:default_attributeGroup"/>
+		<attribute fixed="int" name="type" type="string"/>
+		<attribute name="minValue" type="integer"/>
+		<attribute name="maxValue" type="integer"/>
+		<attribute name="value" type="integer"/>
+	</attributeGroup>
+	<attributeGroup name="long_attributeGroup">
+		<attributeGroup ref="simmit:default_attributeGroup"/>
+		<attribute fixed="long" name="type" type="string"/>
+		<attribute name="minValue" type="long"/>
+		<attribute name="maxValue" type="long"/>
+		<attribute name="value" type="long"/>
+	</attributeGroup>
+	<attributeGroup name="byte_attributeGroup">
+		<attributeGroup ref="simmit:default_attributeGroup"/>
+		<attribute fixed="byte" name="type" type="string"/>
+		<attribute name="minValue" type="byte"/>
+		<attribute name="maxValue" type="byte"/>
+		<attribute name="value" type="byte"/>
+	</attributeGroup>
+	<attributeGroup name="float_attributeGroup">
+		<attributeGroup ref="simmit:default_attributeGroup"/>
+		<attribute fixed="float" name="type" type="string"/>
+		<attribute name="minValue" type="float"/>
+		<attribute name="maxValue" type="float"/>
+		<attribute name="value" type="float"/>
+	</attributeGroup>
+	<attributeGroup name="double_attributeGroup">
+		<attribute fixed="double" name="type" type="string"/>
+		<attribute name="minValue" type="double"/>
+		<attribute name="maxValue" type="double"/>
+		<attribute name="value" type="double"/>
+		<attributeGroup ref="simmit:default_attributeGroup"/>
+	</attributeGroup>
+	<group name="min_max_elements">
+		<choice>
+			<element name="minValue"/>
+			<element name="maxValue"/>
+			<element name="minLength"/>
+			<element name="maxLength"/>
+		</choice>
+	</group>
+</schema>

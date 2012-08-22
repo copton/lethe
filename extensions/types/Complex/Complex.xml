@@ -1,0 +1,28 @@
+<simmit:parameter xmlns:simmit="https://proj.5nord.org/simmit" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://proj.5nord.org/simmit ../../../core/xml/typeDescription.xsd">
+  <name>Complex</name>
+  <author>phia</author>
+  <version>1.0</version>
+  <description>Klasse fuer komplexe Zahlen</description>
+  <include />
+  <export>Complex</export>
+  <define>
+    <class>
+      <name>Complex</name>
+      <members>
+        <double>
+          <name>real</name>
+          <default>0</default>
+        </double>
+        <double>
+          <name>img</name>
+          <default>0</default>
+        </double>
+      </members>
+    </class>
+    <array>
+      <name>TestClass</name>
+      <elementType>int</elementType>
+      <default>0</default>
+    </array>
+  </define>
+</simmit:parameter>

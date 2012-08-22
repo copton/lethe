@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--generated at: 2006-04-16T21:06:00.603+02:00-->
+<type:Integer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:type="https://proj.5nord.org/simmit/types/Integer"
+              xsi:schemaLocation="https://proj.5nord.org/simmit/types/Integer Integer.xsd"
+              imprints="Complex2">
+   <author/>
+   <version>1.0</version>
+   <date>2006-03-06</date>
+   <description/>
+   <include/>
+   <export type="class" classname="Integer">
+      <value type="int">0</value>
+   </export>
+</type:Integer>

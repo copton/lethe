@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--generated at: 2006-04-17T19:04:22.861+02:00-->
+<module:Encoder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:module="https://proj.5nord.org/simmit/modules/Encoder"
+                xsi:schemaLocation="https://proj.5nord.org/simmit/modules/Encoder Encoder.xsd">
+   <author>alex</author>
+   <version>1.0</version>
+   <date>2006-03-06</date>
+   <type>Kodierer</type>
+   <description/>
+   <include/>
+   <parameter>
+      <configuration/>
+      <settings>
+         <amplifier type="int">0</amplifier>
+      </settings>
+   </parameter>
+   <ports>
+      <Input direction="input" type="Integer" blocksize="2" usedType="" description=""/>
+    
+      <Output direction="output" type="Complex" blocksize="1" usedType="" description=""/>
+    </ports>
+</module:Encoder>

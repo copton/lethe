@@ -1,0 +1,14 @@
+#!/bin/sh
+
+cmdFile=`mktemp`
+cat << EOF >  $cmdFile
+# break tstream.h:189
+# break tvectors.h:103
+# break controller.cpp:206
+# break Core::Stream::_onRead
+# break Core::Stream::_onWrite
+run JOBID SUFFIX debug
+EOF
+
+gdb -x $cmdFile ./link/simulation 
+rm -f $cmdFile

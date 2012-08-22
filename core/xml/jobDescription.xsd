@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="https://proj.5nord.org/simmit" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:simmit="https://proj.5nord.org/simmit">
+	<include schemaLocation="moduleDescription.xsd"/>
+	<element name="job">
+		<complexType>
+			<all>
+				<element name="name"/>
+				<element name="author" default=""/>
+				<element default="1.0" name="version"/>
+				<element name="date" minOccurs="0"/>
+				<element name="description" default=""/>
+				<element name="core">
+					<complexType>
+						<sequence>
+							<element name="server" type="simmit:server" minOccurs="0"/>
+							<choice>
+								<element name="SvnSource" type="simmit:SvnSource"/>
+								<element name="LocalSource" type="simmit:LocalSource"/>
+							</choice>
+						</sequence>
+					</complexType>
+				</element>
+				<element name="graph" type="simmit:graph"/>
+				<element name="settings">
+					<complexType>
+						<sequence>
+							<element minOccurs="0" name="default" type="simmit:round"/>
+							<element minOccurs="0" name="rounds">
+								<complexType>
+									<sequence>
+										<element maxOccurs="unbounded" name="round">
+											<complexType>
+												<complexContent>
+													<extension base="simmit:round">
+														<attribute name="nr" type="integer"/>
+													</extension>
+												</complexContent>
+											</complexType>
+										</element>
+									</sequence>
+									<attribute default="1" name="anz" type="integer"/>
+								</complexType>
+							</element>
+						</sequence>
+					</complexType>
+				</element>
+			</all>
+		</complexType>
+		<keyref name="NodeNameRef" refer="simmit:NodeName">
+			<selector xpath=".//settings/*/module"/>
+			<field xpath="@name"/>
+		</keyref>
+	</element>
+	<complexType name="graph">
+		<sequence>
+			<element name="nodes">
+				<complexType>
+					<sequence>
+						<element maxOccurs="unbounded" name="node" type="simmit:node"/>
+					</sequence>
+				</complexType>
+				<key name="NodeName">
+					<selector xpath=".//node"/>
+					<field xpath="name"/>
+				</key>
+			</element>
+			<element name="edges">
+				<complexType>
+					<sequence>
+						<element name="edge" type="simmit:edge" minOccurs="0" maxOccurs="unbounded" />
+					</sequence>
+				</complexType>
+			</element>		
+			<element name="phases">
+				<complexType>
+					<sequence>
+						<element name="phase" maxOccurs="unbounded" minOccurs="0">
+							<complexType>
+								<sequence>
+									<element name="node" maxOccurs="unbounded">
+										<complexType>
+											<sequence>
+												<element name="name" type="string" />
+												<element minOccurs="0" name="observed" type="simmit:emptyType" />
+												<element minOccurs="0" maxOccurs="unbounded" name="port">
+													<complexType>
+														<sequence>
+															<element name="name" type="string" />
+															<element minOccurs="0" name="reset" type="simmit:emptyType" />
+														</sequence>
+													</complexType>
+												</element>
+											</sequence>
+										</complexType>
+									</element>
+								</sequence>		
+								<attribute name="nr" type="integer"/>
+							</complexType>
+						</element>
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="emptyType" />
+	<complexType name="round">
+		<sequence>
+		<element name="description" minOccurs="0"/>
+			<element maxOccurs="unbounded" minOccurs="0" name="node">
+				<complexType>
+					<complexContent>
+						<extension base="anyType">
+						<attribute name="name" type="string"/>
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="node">
+		<sequence>
+			<element name="name" type="string"/>
+			<element name="description" minOccurs="0"/>
+	     	<element name="module" type="string"/>
+		   	<element name="instance" type="string"/>
+			<element name="location">
+				<complexType>
+					<sequence>
+						<element name="server" type="simmit:server" minOccurs="0" />
+						<choice>
+							<element name="SvnSource" type="simmit:SvnSource"/>
+							<element name="LocalSource" type="simmit:LocalSource"/>
+						</choice>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="configuration" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="edge">
+		<sequence>
+			<element name="name" type="string"/>
+			<element name="minSize" type="nonNegativeInteger" default="0" minOccurs="0"/>
+			<element name="description"  minOccurs="0"/>
+			<element maxOccurs="unbounded" minOccurs="2" name="node" type="simmit:edgeConnection"/>
+		</sequence>
+	</complexType>
+	<complexType name="edgeConnection">
+		<sequence>
+			<element name="name" type="string"/>
+			<element name="port">
+				<complexType mixed="true">
+					<simpleContent>
+						<extension base="string">
+							<attribute name="direction" />	
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+
+						
+	<complexType name="server">
+		<sequence>
+			<element name="host" type="string"/>
+			<element name="port" type="positiveInteger" />
+		</sequence>
+	</complexType>					
+						
+	<complexType name="SvnSource">
+		<sequence>
+			<element name="revision" type="positiveInteger" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="LocalSource">
+    	<sequence>
+			<element name="pathToExtensions" type="string" />
+		</sequence>
+	</complexType>
+
+</schema>

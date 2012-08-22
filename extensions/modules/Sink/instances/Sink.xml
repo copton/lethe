@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--generated at: 2006-04-17T19:04:25.194+02:00-->
+<module:Sink xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:module="https://proj.5nord.org/simmit/modules/Sink"
+             xsi:schemaLocation="https://proj.5nord.org/simmit/modules/Sink Sink.xsd">
+   <author>alex</author>
+   <version>1.0</version>
+   <date>2006-03-06</date>
+   <type>Quelle</type>
+   <description/>
+   <include/>
+   <parameter>
+      <configuration>
+         <abort type="int">0</abort>
+         <counter type="int">0</counter>
+      </configuration>
+      <settings/>
+   </parameter>
+   <ports>
+      <Source direction="input" type="Integer" blocksize="1" usedType="" description=""/>
+      <Result direction="input" type="Integer" blocksize="1" usedType="" description=""/>
+    </ports>
+</module:Sink>

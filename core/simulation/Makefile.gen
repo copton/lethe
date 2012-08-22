@@ -1,0 +1,22 @@
+include config.mak
+include $(ROOT)/gen/config.mak
+
+.PHONY: all clean
+
+CCFLAGS = $(GLOBAL_CCFLAGS) 
+
+-include $(foreach directory, types modules, $(foreach name, $($(directory)_LIST), $(EXT_PATH)/$(directory)/$(name)/config.mak))
+
+CCFLAGS += -I$(ROOT) -I$(EXT_PATH) 
+
+LIB_NAME = libgen.a 
+
+all: $(LIB_NAME)
+
+$(LIB_NAME): $(OBJECTS)
+	$(AR) r $@ $^
+	$(RANLIB) $@
+
+clean:
+	rm -f $(OBJECTS)
+	rm -f $(LIB_NAME)

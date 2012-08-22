@@ -1,0 +1,42 @@
+DEPEND = depend.mak
+ifeq ($(MAKECMDGOALS), all)
+include $(DEPEND)
+endif
+
+.PHONY: all clean
+
+VPATH=$(SLICE_PATH)
+SLICEC_FLAGS = $(GLOBAL_SLICEC_FLAGS) $(foreach path, $(VPATH), -I$(path) ) 
+SLICE_FILES = $(patsubst %.ice, %, $(shell cd $(SLICE_PATH); $(SLICEC) --depend $(SLICEC_FLAGS) proxy.ice logger.ice | sed -e 's/.*://' | awk -F\\ '{print $$1}'))
+
+
+CCFLAGS = $(GLOBAL_CCFLAGS) -I$(ROOT) -I$(ROOT)/comm
+
+LIB_NAME = libcomm.a
+
+EXTRA_OBJECTS = $(foreach file, $(SLICE_FILES), $(file).o)
+
+all: $(LIB_NAME) comm.h
+
+$(LIB_NAME): $(EXTRA_OBJECTS)
+	$(AR) r $@ $^
+	$(RANLIB) $@
+
+comm.h:
+	for i in $(SLICE_FILES); do \
+		sed -i -e 's/include <\(\w*\.h\)>/include <comm\/\1>/' $$i.h; \
+		echo "#include \"$$i.h\"" ; \
+	done > $@
+
+$(DEPEND): 
+	echo $(SLICEC_FILES)
+	for i in $(SLICE_FILES); do (cd $(SLICE_PATH); $(SLICEC) --depend $(SLICEC_FLAGS) $$i.ice); done > $@
+	sed -i -e 's/\.ice/\.cpp/g' -e 's/\.cpp:/\.o:/' $@
+	for i in $(SLICE_FILES); do (cd $(SLICE_PATH); $(SLICEC) --depend $(SLICEC_FLAGS) $$i.ice); done >> $@
+
+clean:
+	rm -f $(EXTRA_OBJECTS)
+	rm -f $(foreach file, $(SLICE_FILES), $(file).{cpp,h})
+	rm -f $(LIB_NAME)
+	rm -f comm.h
+	rm -f $(DEPEND)

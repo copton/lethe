@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="https://proj.5nord.org/simmit/authentication" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:auth="https://proj.5nord.org/simmit/authentication">
+	<element name="authentication">
+		<complexType>
+			<sequence>
+				<element name="users" type="auth:users"/>
+				<element maxOccurs="unbounded" minOccurs="0" name="groups" type="auth:groups"/>
+				<element maxOccurs="unbounded" name="permissions" type="auth:permissions"/>
+			</sequence>
+		</complexType>
+	</element>
+	<complexType name="users">
+		<sequence>
+			<element maxOccurs="unbounded" name="user">
+				<complexType>
+					<all>
+						<element minOccurs="0" name="allow" type="auth:permissions"/>
+						<element minOccurs="0" name="deny" type="auth:permissions"/>
+						<element minOccurs="0" name="description" type="string"/>
+					</all>
+					<attribute name="name" type="string" use="required"/>
+					<attribute name="group" type="string"/>
+					<attribute name="password" type="string" use="required"/>
+					<attribute name="priority" type="integer" />
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="groups">
+		<sequence>
+			<element maxOccurs="unbounded" minOccurs="0" name="group">
+				<complexType>
+					<all>
+						<element minOccurs="0" name="allow" type="auth:permissions"/>
+						<element minOccurs="0" name="deny" type="auth:permissions"/>
+						<element minOccurs="0" name="description" type="string"/>
+					</all>
+					<attribute name="name" type="string" use="required"/>
+					<attribute name="supergroup" type="string"/>
+					<attribute name="priority" type="integer" />
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="permissions">
+		<sequence>
+			<element maxOccurs="unbounded" name="permission">
+				<complexType>
+					<sequence>
+						<element maxOccurs="unbounded" minOccurs="0" name="action" type="auth:action"/>
+						<element maxOccurs="unbounded" minOccurs="0" name="ongroup" type="auth:ongroup"/>
+						<element minOccurs="0" name="description" type="string"/>
+					</sequence>
+					<attribute name="name" type="string" use="required"/>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+		<complexType name="action">
+			<sequence>
+				<element maxOccurs="unbounded" minOccurs="0" name="ongroup" type="auth:ongroup"/>
+				<element minOccurs="0" name="description" type="string"/>
+			</sequence>
+			<attribute name="name" type="string" use="required"/>
+		</complexType>
+	
+	<complexType name="ongroup">
+		<attribute name="name" type="string" use="required"/>
+	</complexType>
+</schema>

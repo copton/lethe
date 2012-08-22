@@ -1,0 +1,3 @@
+#!/bin/sh
+
+java -classpath .:../../../libs/Ice.jar:/usr/share/java/db.jar:../../../libs/jdom.jar:../../../libs/saxon8-jdom.jar:../../../libs/saxon8.jar:../../../libs/xercesImpl.jar:../../../libs/xml-apis.jar:comm.jar:client.jar client/PackageGenerator $*

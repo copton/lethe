@@ -1,0 +1,56 @@
+<simmit:module xmlns:simmit="https://proj.5nord.org/simmit" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://proj.5nord.org/simmit ../../../core/xml/moduleDescription.xsd">
+  <name>Sink</name>
+  <author>alex</author>
+  <version>1.0</version>
+  <date>2006-03-06</date>
+  <type>Quelle</type>
+  <description />
+  <include />
+  <define />
+  <parameter>
+    <configuration>
+      <int>
+        <name>abort</name>
+        <default>0</default>
+      </int>
+      <int>
+        <name>counter</name>
+        <default>0</default>
+      </int>
+    </configuration>
+    <settings />
+    <results>
+      <float>
+        <name>errorProb</name>
+        <default>0</default>
+      </float>
+    </results>
+    <serialize>
+      <int>
+        <name>counter</name>
+        <default>0</default>
+      </int>
+      <int>
+        <name>errorCounter</name>
+        <default>0</default>
+      </int>
+    </serialize>
+  </parameter>
+  <ports>
+    <input>
+      <port>
+        <name>Source</name>
+        <type>Integer</type>
+        <usedType />
+        <blocksize>1</blocksize>
+      </port>
+      <port>
+        <name>Result</name>
+        <type>Integer</type>
+        <usedType />
+        <blocksize>1</blocksize>
+      </port>
+    </input>
+    <output />
+  </ports>
+</simmit:module>

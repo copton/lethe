@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:simmit="https://proj.5nord.org/simmit"
+        xmlns:Source="https://proj.5nord.org/simmit/modules/Source"
+        xmlns:Encoder="https://proj.5nord.org/simmit/modules/Encoder"
+        xmlns:Channel="https://proj.5nord.org/simmit/modules/Channel"
+        xmlns:Decoder="https://proj.5nord.org/simmit/modules/Decoder"
+        xmlns:Sink="https://proj.5nord.org/simmit/modules/Sink"
+        targetNamespace="https://proj.5nord.org/simmit">
+   <import namespace="https://proj.5nord.org/simmit/modules/Source"
+           schemaLocation="/home/alex/diplomarbeit/svnroot/trunk/code/extensions/modules/Source/instances/Source.xsd"/>
+   <import namespace="https://proj.5nord.org/simmit/modules/Encoder"
+           schemaLocation="/home/alex/diplomarbeit/svnroot/trunk/code/extensions/modules/Encoder/instances/Encoder.xsd"/>
+   <import namespace="https://proj.5nord.org/simmit/modules/Channel"
+           schemaLocation="/home/alex/diplomarbeit/svnroot/trunk/code/extensions/modules/Channel/instances/Channel.xsd"/>
+   <import namespace="https://proj.5nord.org/simmit/modules/Decoder"
+           schemaLocation="/home/alex/diplomarbeit/svnroot/trunk/code/extensions/modules/Decoder/instances/Decoder.xsd"/>
+   <import namespace="https://proj.5nord.org/simmit/modules/Sink"
+           schemaLocation="/home/alex/diplomarbeit/svnroot/trunk/code/extensions/modules/Sink/instances/Sink.xsd"/>
+   <include schemaLocation="/home/alex/diplomarbeit/svnroot/trunk/code/core/xml/moduleDescription.xsd"/>
+   <element name="job">
+      <complexType>
+         <sequence>
+            <group ref="simmit:headerInformationWithName"/>
+            <element name="graph" type="simmit:graph"/>
+            <element name="settings" type="simmit:job_settings"/>
+         </sequence>
+      </complexType>
+   </element>
+   <complexType name="graph">
+      <sequence>
+         <element name="nodes" type="simmit:nodes"/>
+         <element name="edges" type="simmit:edges"/>
+         <element name="phases" type="simmit:phases"/>
+      </sequence>
+   </complexType>
+   <complexType name="nodes">
+      <all>
+         <element name="node">
+            <complexType>
+               <sequence>
+                  <element fixed="Quelle" name="name"/>
+                  <element name="location">
+                     <complexType>
+                        <sequence>
+                           <element fixed="Source" name="module"/>
+                           <element name="instance" type="string"/>
+                        </sequence>
+                     </complexType>
+                  </element>
+                  <element minOccurs="0" name="configuration">
+                     <complexType>
+                        <all>
+                           <element minOccurs="0" name="useRandom" type="simmit:boolean"/>
+                        </all>
+                     </complexType>
+                  </element>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="node">
+            <complexType>
+               <sequence>
+                  <element fixed="Kodierer" name="name"/>
+                  <element name="location">
+                     <complexType>
+                        <sequence>
+                           <element fixed="Encoder" name="module"/>
+                           <element name="instance" type="string"/>
+                        </sequence>
+                     </complexType>
+                  </element>
+                  <element minOccurs="0" name="configuration">
+                     <complexType>
+                        <all/>
+                     </complexType>
+                  </element>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="node">
+            <complexType>
+               <sequence>
+                  <element fixed="Kanal" name="name"/>
+                  <element name="location">
+                     <complexType>
+                        <sequence>
+                           <element fixed="Channel" name="module"/>
+                           <element name="instance" type="string"/>
+                        </sequence>
+                     </complexType>
+                  </element>
+                  <element minOccurs="0" name="configuration">
+                     <complexType>
+                        <all/>
+                     </complexType>
+                  </element>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="node">
+            <complexType>
+               <sequence>
+                  <element fixed="Dekodierer" name="name"/>
+                  <element name="location">
+                     <complexType>
+                        <sequence>
+                           <element fixed="Decoder" name="module"/>
+                           <element name="instance" type="string"/>
+                        </sequence>
+                     </complexType>
+                  </element>
+                  <element minOccurs="0" name="configuration">
+                     <complexType>
+                        <all/>
+                     </complexType>
+                  </element>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="node">
+            <complexType>
+               <sequence>
+                  <element fixed="Senke" name="name"/>
+                  <element name="location">
+                     <complexType>
+                        <sequence>
+                           <element fixed="Sink" name="module"/>
+                           <element name="instance" type="string"/>
+                        </sequence>
+                     </complexType>
+                  </element>
+                  <element minOccurs="0" name="configuration">
+                     <complexType>
+                        <all>
+                           <element minOccurs="0" name="abort" type="simmit:int"/>
+                           <element minOccurs="0" name="counter" type="simmit:int"/>
+                        </all>
+                     </complexType>
+                  </element>
+               </sequence>
+            </complexType>
+         </element>
+      </all>
+   </complexType>
+   <complexType name="edges">
+      <sequence>
+         <element minOccurs="0" name="edge">
+            <complexType>
+               <sequence>
+                  <element fixed="quelle2kodierer" name="name"/>
+                  <element name="node">
+                     <complexType>
+                        <sequence>
+                           <element fixed="Quelle" name="name"/>
+                           <element fixed="Output" name="port">
+                              <complexType>
+                                 <simpleContent>
+                                    <extension base="string">
+                                       <attribute fixed="output" name="direction"/>
+                                    </extension>
+                                 </simpleContent>
+                              </complexType>
+                           </element>
+                        </sequence>
+                     </complexType>
+                  </element>
+                  <element name="node">
+                     <complexType>
+                        <sequence>
+                           <element fixed="Kodierer" name="name"/>
+                           <element fixed="Input" name="port">
+                              <complexType>
+                                 <simpleContent>
+                                    <extension base="string">
+                                       <attribute fixed="input" name="direction"/>
+                                    </extension>
+                                 </simpleContent>
+                              </complexType>
+                           </element>
+                        </sequence>
+                     </complexType>
+                  </element>
+                  <element name="node">
+                     <complexType>
+                        <sequence>
+                           <element fixed="Senke" name="name"/>
+                           <element fixed="Source" name="port">
+                              <complexType>
+                                 <simpleContent>
+                                    <extension base="string">
+                                       <attribute fixed="input" name="direction"/>
+                                    </extension>
+                                 </simpleContent>
+                              </complexType>
+                           </element>
+                        </sequence>
+                     </complexType>
+                  </element>
+               </sequence>
+            </complexType>
+         </element>
+         <element minOccurs="0" name="edge">
+            <complexType>
+               <sequence>
+                  <element fixed="kodierer2kanal" name="name"/>
+                  <element name="node">
+                     <complexType>
+                        <sequence>
+                           <element fixed="Kodierer" name="name"/>
+                           <element fixed="Output" name="port">
+                              <complexType>
+                                 <simpleContent>
+                                    <extension base="string">
+                                       <attribute fixed="output" name="direction"/>
+                                    </extension>
+                                 </simpleContent>
+                              </complexType>
+                           </element>
+                        </sequence>
+                     </complexType>
+                  </element>
+                  <element name="node">
+                     <complexType>
+                        <sequence>
+                           <element fixed="Kanal" name="name"/>
+                           <element fixed="Input" name="port">
+                              <complexType>
+                                 <simpleContent>
+                                    <extension base="string">
+                                       <attribute fixed="input" name="direction"/>
+                                    </extension>
+                                 </simpleContent>
+                              </complexType>
+                           </element>
+                        </sequence>
+                     </complexType>
+                  </element>
+               </sequence>
+            </complexType>
+         </element>
+         <element minOccurs="0" name="edge">
+            <complexType>
+               <sequence>
+                  <element fixed="kanal2decoder" name="name"/>
+                  <element name="node">
+                     <complexType>
+                        <sequence>
+                           <element fixed="Kanal" name="name"/>
+                           <element fixed="Output" name="port">
+                              <complexType>
+                                 <simpleContent>
+                                    <extension base="string">
+                                       <attribute fixed="output" name="direction"/>
+                                    </extension>
+                                 </simpleContent>
+                              </complexType>
+                           </element>
+                        </sequence>
+                     </complexType>
+                  </element>
+                  <element name="node">
+                     <complexType>
+                        <sequence>
+                           <element fixed="Dekodierer" name="name"/>
+                           <element fixed="Input" name="port">
+                              <complexType>
+                                 <simpleContent>
+                                    <extension base="string">
+                                       <attribute fixed="input" name="direction"/>
+                                    </extension>
+                                 </simpleContent>
+                              </complexType>
+                           </element>
+                        </sequence>
+                     </complexType>
+                  </element>
+               </sequence>
+            </complexType>
+         </element>
+         <element minOccurs="0" name="edge">
+            <complexType>
+               <sequence>
+                  <element fixed="dekodierer2senke" name="name"/>
+                  <element name="node">
+                     <complexType>
+                        <sequence>
+                           <element fixed="Dekodierer" name="name"/>
+                           <element fixed="Output" name="port">
+                              <complexType>
+                                 <simpleContent>
+                                    <extension base="string">
+                                       <attribute fixed="output" name="direction"/>
+                                    </extension>
+                                 </simpleContent>
+                              </complexType>
+                           </element>
+                        </sequence>
+                     </complexType>
+                  </element>
+                  <element name="node">
+                     <complexType>
+                        <sequence>
+                           <element fixed="Senke" name="name"/>
+                           <element fixed="Result" name="port">
+                              <complexType>
+                                 <simpleContent>
+                                    <extension base="string">
+                                       <attribute fixed="input" name="direction"/>
+                                    </extension>
+                                 </simpleContent>
+                              </complexType>
+                           </element>
+                        </sequence>
+                     </complexType>
+                  </element>
+               </sequence>
+            </complexType>
+         </element>
+      </sequence>
+   </complexType>
+   <complexType name="phases">
+      <sequence>
+         <element maxOccurs="unbounded" name="phase">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="node">
+                     <complexType>
+                        <sequence>
+                           <element name="name">
+                              <simpleType>
+                                 <restriction base="string">
+                                    <enumeration value="Quelle"/>
+                                    <enumeration value="Kodierer"/>
+                                    <enumeration value="Kanal"/>
+                                    <enumeration value="Dekodierer"/>
+                                    <enumeration value="Senke"/>
+                                 </restriction>
+                              </simpleType>
+                           </element>
+                           <element minOccurs="0" name="observed">
+                              <complexType/>
+                           </element>
+                           <sequence>
+                              <element maxOccurs="unbounded" minOccurs="0" name="port">
+                                 <complexType>
+                                    <sequence>
+                                       <element name="name" type="string"/>
+                                       <element minOccurs="0" name="reset">
+                                          <complexType/>
+                                       </element>
+                                    </sequence>
+                                 </complexType>
+                              </element>
+                           </sequence>
+                        </sequence>
+                     </complexType>
+                  </element>
+               </sequence>
+               <attribute name="nr" type="integer"/>
+            </complexType>
+         </element>
+      </sequence>
+   </complexType>
+   <complexType name="job_settings">
+      <sequence>
+         <element name="default">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" minOccurs="0" name="node" type="simmit:availableNodes"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="rounds">
+            <complexType>
+               <sequence>
+                  <element minOccurs="0" name="description" type="string"/>
+                  <element maxOccurs="5" minOccurs="0" name="round">
+                     <complexType>
+                        <sequence>
+                           <element minOccurs="0" name="description" type="string"/>
+                           <element maxOccurs="unbounded" minOccurs="0" name="node" type="simmit:availableNodes"/>
+                        </sequence>
+                        <attribute name="nr">
+                           <simpleType>
+                              <restriction base="integer">
+                                 <minInclusive value="1"/>
+                                 <maxInclusive value="5"/>
+                              </restriction>
+                           </simpleType>
+                        </attribute>
+                     </complexType>
+                  </element>
+               </sequence>
+               <attribute fixed="5" name="anz"/>
+            </complexType>
+         </element>
+      </sequence>
+   </complexType>
+   <complexType name="availableNodes">
+      <choice>
+         <sequence>
+            <element name="name">
+               <simpleType>
+                  <restriction base="string">
+                     <enumeration value="Quelle"/>
+                  </restriction>
+               </simpleType>
+            </element>
+            <element minOccurs="0" name="newSeed" type="simmit:boolean"/>
+            <element minOccurs="0" name="seed" type="simmit:long"/>
+         </sequence>
+         <sequence>
+            <element name="name">
+               <simpleType>
+                  <restriction base="string">
+                     <enumeration value="Kodierer"/>
+                  </restriction>
+               </simpleType>
+            </element>
+            <element minOccurs="0" name="amplifier" type="simmit:int"/>
+         </sequence>
+         <sequence>
+            <element name="name">
+               <simpleType>
+                  <restriction base="string">
+                     <enumeration value="Kanal"/>
+                  </restriction>
+               </simpleType>
+            </element>
+            <element minOccurs="0" name="noiseReal" type="Channel:Noise"/>
+            <element minOccurs="0" name="noiseImag" type="Channel:Noise"/>
+         </sequence>
+         <sequence>
+            <element name="name">
+               <simpleType>
+                  <restriction base="string">
+                     <enumeration value="Dekodierer"/>
+                  </restriction>
+               </simpleType>
+            </element>
+         </sequence>
+         <sequence>
+            <element name="name">
+               <simpleType>
+                  <restriction base="string">
+                     <enumeration value="Senke"/>
+                  </restriction>
+               </simpleType>
+            </element>
+         </sequence>
+      </choice>
+   </complexType>
+</schema>

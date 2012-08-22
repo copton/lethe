@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- New document created at Sun Jan 15 17:27:54 CET 2006 -->
+<simmit:module xmlns:simmit="https://proj.5nord.org/simmit" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://proj.5nord.org/simmit moduleDescription.xsd">
+	<name>Testmodul</name>
+	<author>phia</author>
+	<version>0.1</version>
+	<date>2006-01-14</date>
+	<type>Quelle</type>
+	<description>Testmodul mit Schemabeschreibung</description>
+	<include>
+		<parameter>
+			<name>Complex</name>
+			<location>Complex.xml</location>
+		</parameter>
+	</include>
+	<define>
+		<class>
+			<name>MyComplex</name>
+			<members>
+				<float>
+					<name>re</name>
+					<default>0</default>
+				</float>
+				<float>
+					<name>im</name>
+					<default>0</default>
+				</float>
+			</members>
+		</class>
+		<dictionary>
+			<name>MyDictionary</name>
+			<valueType>Complex</valueType>
+		</dictionary>
+		<enum>
+			<name>MyEnumeration</name>
+			<default>FOO</default>
+			<members>
+				<name>FOO</name>
+				<name>BAR</name>
+				<name>OINK</name>
+			</members>
+		</enum>
+	</define>
+	<parameter>
+		<configuration>
+			<string>
+				<name>string1</name>
+				<default>value1</default>
+				<description>Ein Beispielstring</description>
+			</string>
+			<int>
+				<name>int1</name>
+				<default>42</default>
+				<description>Ein Beispielstring</description>
+			</int>
+			<class name="MyComplex">
+				<name>myOwnComplex</name>
+			</class>
+			<class name="MyEnumeration">
+				<name>myOwnEnum</name>
+			</class>	
+			<class name="MyDictionary">
+				<name>myOwnDictionary</name>
+			</class>
+		</configuration>
+		<settings>
+			<class name="Complex">
+				<name>defComplex</name>
+			</class>
+		</settings>
+	</parameter>
+	<ports>
+		<output>
+			<port>
+				<name>output</name>
+				<type>Complex</type>
+				<blocksize>12</blocksize>
+			</port>
+			<port>
+				<name>output2</name>
+				<type>Complex</type>
+				<blocksize>8</blocksize>
+			</port>
+		</output>
+	</ports>
+</simmit:module>

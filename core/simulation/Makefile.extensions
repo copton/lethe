@@ -1,0 +1,36 @@
+-include config.mak
+DEPEND = depend.mak
+ifeq ($(MAKECMDGOALS),all)
+include $(DEPEND)
+endif
+
+CCFLAGS ?= $(GLOBAL_CCFLAGS) -I$(ROOT) -I.
+SLICEC_FLAGS ?= $(GLOBAL_SLICEC_FLAGS) --ice
+
+MODULE_NAME = $(notdir $(CURDIR))
+
+EXTRA_TARGETS = gen_$(MODULE_NAME)
+OBJECTS += $(foreach name, $(EXTRA_TARGETS), $(name).o)
+
+LIB_NAME = lib$(MODULE_NAME).a
+
+.PHONY: all clean 
+
+all: $(LIB_NAME)
+
+$(LIB_NAME): $(OBJECTS)
+	$(AR) r $@ $^
+	$(RANLIB) $@
+
+$(DEPEND):
+	if [ -f *.cpp ]; then \
+		$(CC) $(CCFLAGS) -MM -MG *.cpp > $@; \
+	else \
+		touch $@ ; \
+	fi
+
+clean:
+	rm -f $(foreach name, $(EXTRA_TARGETS), $(name).{cpp,h})
+	rm -f $(OBJECTS) 
+	rm -f $(LIB_NAME)
+	rm -f $(DEPEND)

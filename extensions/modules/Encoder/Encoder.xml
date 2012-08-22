@@ -1,0 +1,39 @@
+<simmit:module xmlns:simmit="https://proj.5nord.org/simmit" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://proj.5nord.org/simmit ../../../core/xml/moduleDescription.xsd">
+  <name>Encoder</name>
+  <author>alex</author>
+  <version>1.0</version>
+  <date>2006-03-06</date>
+  <type>Kodierer</type>
+  <description />
+  <include />
+  <define />
+  <parameter>
+    <configuration />
+    <settings>
+      <int>
+        <name>amplifier</name>
+        <default>0</default>
+      </int>
+    </settings>
+    <results />
+    <serialize />
+  </parameter>
+  <ports>
+    <input>
+      <port>
+        <name>Input</name>
+        <type>Integer</type>
+        <usedType />
+        <blocksize>2</blocksize>
+      </port>
+    </input>
+    <output>
+      <port>
+        <name>Output</name>
+        <type>Complex</type>
+        <usedType />
+        <blocksize>1</blocksize>
+      </port>
+    </output>
+  </ports>
+</simmit:module>

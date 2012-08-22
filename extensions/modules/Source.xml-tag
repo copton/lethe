@@ -1,0 +1,55 @@
+<simmit:module xmlns:simmit="https://proj.5nord.org/simmit" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://proj.5nord.org/simmit ../../../core/xml/moduleDescription.xsd">
+  <name>Source</name>
+  <author>alex</author>
+  <version>0.1</version>
+  <date>2006-03-06</date>
+  <type>Quelle</type>
+  <description>Source module</description>
+  <include />
+  <define>
+    <array>
+      <name>ByteSequence</name>
+      <elementType>byte</elementType>
+      <default>false</default>
+    </array>
+  </define>
+  <parameter>
+    <configuration>
+      <boolean>
+        <name>useRandom</name>
+        <default>false</default>
+      </boolean>
+    </configuration>
+    <settings>
+      <boolean>
+        <name>newSeed</name>
+        <default>false</default>
+      </boolean>
+      <long>
+        <name>seed</name>
+        <default>0</default>
+      </long>
+    </settings>
+    <results />
+    <serialize>
+      <instance name="ByteSequence">
+        <name>rngState</name>
+      </instance>
+      <int>
+            <name>counter</name>
+            <default>0</default>
+      </int>
+    </serialize>
+  </parameter>
+  <ports>
+    <input />
+    <output>
+      <port>
+        <name>Output</name>
+        <type>Integer</type>
+        <usedType />
+        <blocksize>1</blocksize>
+      </port>
+    </output>
+  </ports>
+</simmit:module>

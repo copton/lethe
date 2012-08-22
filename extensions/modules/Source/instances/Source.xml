@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--generated at: 2006-04-17T19:04:27.51+02:00-->
+<module:Source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:module="https://proj.5nord.org/simmit/modules/Source"
+               xsi:schemaLocation="https://proj.5nord.org/simmit/modules/Source Source.xsd">
+   <author>alex</author>
+   <version>0.1</version>
+   <date>2006-03-06</date>
+   <type>Quelle</type>
+   <description>Source module</description>
+   <include/>
+   <parameter>
+      <configuration>
+         <useRandom>false</useRandom>
+      </configuration>
+      <settings>
+         <newSeed>false</newSeed>
+         <seed type="long">0</seed>
+      </settings>
+   </parameter>
+   <ports>
+      <Output direction="output" type="Integer" blocksize="1" usedType="" description=""/>
+    </ports>
+</module:Source>

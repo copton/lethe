@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--TODO: phases fehlen noch, und statt import moduleDescription.xsd muss es include heissen! -->
+<simmit:job xmlns:simmit="https://proj.5nord.org/simmit" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="https://proj.5nord.org/simmit testJob.xsd"> 
+	<name>Testmodul</name>
+	<author>phia</author>
+	<version>0.1</version>
+	<date>2006-01-14</date>
+	<description>Einfacher Graph</description>
+	<graph>
+		<nodes>
+			<node>
+				<name>Quelle</name>
+				<location>
+					<module>Source</module>
+					<instance>Source</instance>
+				</location>
+			</node>
+			<node>
+				<name>Kodierer</name>
+				<location>
+					<module>Encoder</module>
+					<instance>Encoder</instance>
+				</location>
+			</node>
+			<node>
+				<name>Kanal</name>
+				<location>
+					<module>Channel</module>
+					<instance>Channel</instance>
+				</location>
+			</node>
+			<node>
+				<name>Dekodierer</name>
+				<location>
+					<module>Decoder</module>
+					<instance>Decoder</instance>
+				</location>
+			</node>
+			<node>
+				<name>Senke</name>
+				<location>
+					<module>Sink</module>
+					<instance>Sink</instance>
+				</location>
+			</node>
+		</nodes>
+		<edges>
+			<edge>
+				<name>quelle2kodierer</name>
+				<node>
+					<name>Quelle</name>
+					<port>Output</port>
+				</node>
+				<node>
+					<name>Kodierer</name>
+					<port>Input</port>
+				</node>
+				<node>
+					<name>Senke</name>
+					<port>Source</port>
+				</node>
+			</edge>
+			<edge>
+				<name>kodierer2kanal</name>
+				<node>
+					<name>Kodierer</name>
+					<port>Output</port>
+				</node>
+				<node>
+					<name>Kanal</name>
+					<port>Input</port>
+				</node>
+			</edge>
+			<edge>
+				<name>kanal2decoder</name>
+				<node>
+					<name>Kanal</name>
+					<port>Output</port>
+				</node>
+				<node>
+					<name>Dekodierer</name>
+					<port>Input</port>
+				</node>
+			</edge>
+			<edge>
+				<name>dekodierer2senke</name>
+				<node>
+					<name>Dekodierer</name>
+					<port>Output</port>
+				</node>
+				<node>
+					<name>Senke</name>
+					<port>Result</port>
+				</node>
+			</edge>
+		</edges>
+		<phases>
+			<phase nr="1">
+					<node>
+						<name>Quelle</name>
+						<port>
+							<name>Output</name>
+						</port>
+					</node>
+					<node>
+						<name>Kodierer</name>
+						<port>
+							<name>Input</name>
+						</port>
+						<port>
+							<name>Output</name>
+						</port>
+					</node>
+					<node>
+						<name>Kanal</name>
+						<port>
+							<name>Input</name>
+						</port>
+						<port>
+							<name>Output</name>
+						</port>
+					</node>
+					<node>
+						<name>Dekodierer</name>
+						<port>
+							<name>Input</name>
+						</port>
+						<port>
+							<name>Output</name>
+						</port>
+					</node>
+					<node>
+						<name>Senke</name>
+						<observed />
+						<port>
+							<name>Source</name>
+						</port>
+						<port>
+							<name>Result</name>
+						</port>
+					</node>
+			</phase>
+		</phases>
+	</graph>
+	<settings>
+		<default />
+		<rounds anz="5">
+			<round nr="1" />
+			<round nr="2" />
+			<round nr="3" />
+			<round nr="4" />
+			<round nr="5" />
+		</rounds>
+	</settings>
+</simmit:job>

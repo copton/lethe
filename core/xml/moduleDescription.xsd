@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="https://proj.5nord.org/simmit" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:simmit="https://proj.5nord.org/simmit">
+	<include schemaLocation="moduleParameter.xsd"/>
+	<element name="module" type="simmit:module">
+		<key name="KnownClasses">
+			<selector xpath="include/type | define/*/name" />	
+			<field xpath="."/>
+		</key>
+		<keyref name="Classname" refer="simmit:KnownClasses">
+			<selector xpath="parameter/*/class"/>
+			<field xpath="@name" />
+		</keyref>
+	</element>
+	<complexType name="module">
+		<sequence>
+			<group ref="simmit:headerInformationWithName"/>
+			<element name="include" minOccurs="0" type="simmit:includeFiles" />
+			<element name="define" minOccurs="0" type="simmit:parameterDefinition" />
+			<element name="parameter">
+				<complexType>
+					<all minOccurs="0">
+						<element minOccurs="0" name="configuration" type="simmit:Parameter" />
+						<element minOccurs="0" name="settings" type="simmit:Parameter" />
+						<element minOccurs="0" name="results" type="simmit:Parameter" />
+						<element minOccurs="0" name="serialize" type="simmit:Parameter" />
+					</all>
+				</complexType>
+			</element>
+			<element minOccurs="0" name="ports">
+				<complexType>
+					<all>
+						<element minOccurs="0" name="input" type="simmit:PortList">
+							<unique name="InputName">
+								<selector xpath="./port"/>
+								<field xpath="name"/>
+							</unique>
+						</element>
+						<element minOccurs="0" name="output" type="simmit:PortList">
+							<unique name="OutputName">
+								<selector xpath="./port"/>
+								<field xpath="name"/>
+							</unique>
+						</element>
+					</all>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="PortList">
+		<sequence>
+			<element maxOccurs="unbounded" minOccurs="0" name="port" type="simmit:Port" />
+		</sequence>
+	</complexType>
+	<complexType name="Port">
+		<sequence>
+			<element name="name" type="string"/>
+			<element name="type" type="string"/>
+			<element name="usedType" type="string" minOccurs="0"/>
+			<element name="blocksize" type="integer"/>
+			<element minOccurs="0" name="description" type="string"/>
+		</sequence>
+	</complexType>
+</schema>

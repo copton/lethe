@@ -1,0 +1,24 @@
+.PHONY: all clean
+
+LDFLAGS = $(GLOBAL_LDFLAGS)
+
+LIBS = $(ROOT)/gen
+
+LIBS += $(foreach directory, types modules, $(foreach name, $($(directory)_LIST), $(EXT_PATH)/$(directory)/$(name)))
+
+LIBS += $(ROOT)/core $(ROOT)/comm
+
+LDFLAGS += $(foreach lib, $(LIBS), -L$(lib) -l$(notdir $(lib)))
+
+-include $(foreach directory, types modules, $(foreach name, $($(directory)_LIST), $(EXT_PATH)/$(directory)/$(name)/config.mak))
+
+all: link
+
+link: $(EXE_FILE)
+
+$(EXE_FILE): $(LIBS)
+	$(LD) -o $@ $(LDFLAGS)
+
+clean:
+	rm -f $(EXE_FILE)
+

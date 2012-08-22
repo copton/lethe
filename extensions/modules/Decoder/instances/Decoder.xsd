@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--generated at: 2006-04-17T19:04:20.677+02:00-->
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:simmit="https://proj.5nord.org/simmit"
+        xmlns:self="https://proj.5nord.org/simmit/modules/Decoder"
+        targetNamespace="https://proj.5nord.org/simmit/modules/Decoder">
+   <import namespace="https://proj.5nord.org/simmit"
+           schemaLocation="../../../../core/xml/moduleDescription.xsd"/>
+   <element name="Decoder">
+      <complexType>
+         <sequence>
+            <group ref="self:headerSet"/>
+            <element name="include" type="self:include"/>
+            <element name="parameter" type="self:parameter"/>
+            <element name="ports" type="self:portList"/>
+         </sequence>
+      </complexType>
+   </element>
+   <group name="headerSet">
+      <sequence>
+         <element minOccurs="0" name="author" type="string"/>
+         <element minOccurs="0" name="version" type="string"/>
+         <element minOccurs="0" name="date" type="date"/>
+         <element minOccurs="0" name="type" type="string"/>
+         <element minOccurs="0" name="description" type="string"/>
+      </sequence>
+   </group>
+   <complexType name="include">
+      <all/>
+   </complexType>
+   <complexType name="parameter">
+      <all>
+         <element name="configuration" type="self:configuration"/>
+         <element name="settings" type="self:settings"/>
+      </all>
+   </complexType>
+   <complexType name="portList">
+      <all>
+         <element name="Input" type="simmit:inputPort"/>
+         <element name="Output" type="simmit:outputPort"/>
+      </all>
+   </complexType>
+   <complexType name="configuration">
+      <all/>
+   </complexType>
+   <complexType name="settings">
+      <all/>
+   </complexType>
+</schema>

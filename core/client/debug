@@ -1,0 +1,19 @@
+#!/bin/sh
+
+jobfile="../../../jobs/2phases/2phases.xml"
+
+case _$1 in
+    _create) 
+        proxy="Generator -t:tcp -h localhost -p 9998"
+        ;;
+    _start)
+        proxy="Simulation-JOBID-SUFFIX -t:tcp -h localhost -p 9999"
+        ;;
+    *)
+        echo "usage $0 create|start"
+        exit 1
+        ;;
+esac
+
+. ./config.mak
+java -classpath $JAVA_CLASSPATH:comm.jar:./tmp client.Debug $jobfile $1 "$proxy"

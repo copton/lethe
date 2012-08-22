@@ -1,0 +1,34 @@
+*
+ * Wie funktioniert der Scheduler?
+ * 1. der Scheduler prüft, ob auf einem Host mehr pausierte Simulationen liegen, als
+ * 		in der Config erlaubt sind. Wenn ja, suspended er die ältesten Simulationen
+ * 		und gibt die Objekte wieder frei.
+ * 2. der Scheduler schaut zu jeder vollen Stunde nach, welche
+ * 		Simulationen gerade laufen. Gibt es Simulationen, die
+ * 		>= 1h laufen, so werden diese pausiert.
+ * 3. der Scheduler überprüft, ob es freie Simulationsslots gibt.
+ * 		wenn ja, überprüft er, ob es geschedulte Simulationen gibt.
+ * 		Anschliessend bestimmt er, welche Simulationen gestartet werden.
+ * 
+ * 4. Dies geschieht mit Hilfe eines Punkte-Systems:
+ * 		- Punkte durch pausierte Zeit: livetime - runtime / 3600
+ * 			-> dies bevorzugt Simulationen, die lange nicht gelaufen sind
+ * 			-> verhindert ein Aushungern von niederprioren simulationen 
+ * 		- Punkte durch Benutzerpriorität
+ * 		- Punkte durch Anzahl der pausiert verfügbaren Simulations-Objekte * 2
+ * 			-> vermeidet ein Neubauen von pausierten Jobs
+ * 		- Punkte werden aufaddiert
+ * 
+ * 5. Simulationen bekommen Anzahl von Simulationsobjekten zur Verfügung gestellt:
+ * 		- bei pausierten Objekten: starte pausierte Runde
+ * 		- ansonsten vergebe simulationsobjekt der reihe nach
+ * 			-> bevorzugt erste runden, so das diese schnellstmöglich ein Ergebnis liefern kann
+ * 
+ * 6. neuer Status wird benötigt: Simulation von Benutzer angehalten
+ * 		In diesem Fall fällt die Simulation aus dem Scheduling heraus, bis der 
+ * 		Benutzer sie wieder fortführt
+ * 
+ * 7. Der Manager kann Methode 2. zu jeder Zeit rufen, zb wenn er einen neuen
+ * 		Simulationsauftrag bekommen hat. Sind keine Hosts mehr frei, passiert einfach nichts *g*
+ */
+

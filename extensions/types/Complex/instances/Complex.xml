@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--generated at: 2006-04-16T21:05:58.154+02:00-->
+<type:Complex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:type="https://proj.5nord.org/simmit/types/Complex"
+              xsi:schemaLocation="https://proj.5nord.org/simmit/types/Complex Complex.xsd"
+              imprints="Complex2">
+   <author>phia</author>
+   <version>1.0</version>
+   <description>Klasse fuer komplexe Zahlen</description>
+   <include/>
+   <export type="class" classname="Complex">
+      <real type="double">0</real>
+      <img type="double">0</img>
+   </export>
+</type:Complex>

@@ -1,0 +1,90 @@
+<icegrid>
+    <application name="Lethe"
+			import-default-templates="true">
+		<server-template id="NodeTemplate">
+			<parameter name="index"/>
+			<parameter name="exepath" 
+				default="./run-generator" />
+			<parameter name="workingDir"
+				default="../generator" />
+			<server id="Generator${index}"
+				exe="${exepath}"
+				activation="on-demand">
+				<property name="Config.WorkingDir" value="${workingDir}" />
+				<property name="Config.WaitpidTimeout" value="5" />
+                <property name="Config.ShutdownTimeout" value="5" />
+				<property name="Config.KillTimeout" value="5" />
+				<property name="Config.MakeCmd" value="make" />
+				<adapter name="GeneratorAdapter"
+					register-process="true"
+					endpoints="tcp" />
+			</server>
+		</server-template>
+
+        <node name="Center">
+			<server id="Manager"
+                exe="./run-manager"
+                activation="on-demand">
+                <adapter name="ServiceAdapter"
+                    register-process="true"
+                    endpoints="tcp">
+                </adapter>
+                <adapter name="ManagerAdapter"
+                    register-process="true"
+                    endpoints="tcp">
+ 				</adapter>
+ 				<property name="Scheduling.TimeSlice" value="__TIME_SLICE__" />
+ 				<property name="Scheduling.Algorithm" value="__SORTING_ALGORITHM__" />
+                <property name="IceGrid.Node.CollocateRegistry" value="1" />
+             </server>
+             
+			 <server id="Authentication"
+                exe="./run-authentication"
+                activation="on-demand">
+				<adapter name="AuthenticationAdapter"
+					register-process="true"
+					endpoints="tcp">
+				</adapter>
+				<adapter name="ServiceAdapter"
+                    register-process="true"
+                    endpoints="tcp">
+                </adapter>
+ 				<property name="IceGrid.Node.CollocateRegistry" value="1" />
+ 				<property name="Configuration.File" value="__CONFIGURATION_FILE__" />
+			</server>
+			<server id="Codedistribution"
+				exe="./run-codedistribution"
+				activation="on-demand">
+				<adapter name="SourceAdapter"
+					register-process="true"
+					endpoints="tcp"/>
+				<adapter name="ServiceAdapter"
+                    register-process="true"
+                    endpoints="tcp"/>
+				
+ 				<property name="config.icepatch2calc" value="__SLICE_PATH__/../bin/icepatch2calc" />
+ 				<property name="config.tempdir" value="__SOURCE_TEMP_DIR__" />
+ 				<property name="config.svn.cmd" value="__SVN_CMD__" />
+ 				<property name="config.svn.password" value="__SVN_PASSWORD__" />
+ 				<property name="config.svn.user" value="__SVN_USER__" />
+ 				<property name="config.svn.pathToRepository" value="__SVN_PATH_TO_REPOSITORY__" />
+ 				<property name="config.svn.pathInRepository" value="__SVN_PATH_IN_REPOSITORY__" />
+ 				<property name="config.file.path" value="__FILE_PATH__" />
+			</server>
+		  <server-instance template="IceStorm" />
+		  <server id="Breeze"
+                exe="./run-breeze"
+                activation="on-demand">
+                <property name="Breeze.Path" value="__SYSTEM_LOG__" />
+                <property name="Breeze.FileName" value="breeze" />
+                <property name="Breeze.FileExtension" value="log" />
+                <adapter name="BreezeAdapter"
+                    register-process="true"
+                    endpoints="tcp" />
+            </server>
+        </node>
+        <node name="Node1">
+            <server-instance template="NodeTemplate" index="1" workingDir="../generator" />
+        </node>
+   </application>
+</icegrid>

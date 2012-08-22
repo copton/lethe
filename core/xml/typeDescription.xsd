@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="https://proj.5nord.org/simmit" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:simmit="https://proj.5nord.org/simmit">
+	<include schemaLocation="moduleParameter.xsd"/>
+	<element name="parameter" type="simmit:parameter">
+		<key name="KnownClasses">
+			<selector xpath="include/type | define/*/name" />	
+			<field xpath="."/>
+		</key>
+		<keyref name="PortObject" refer="simmit:KnownClasses">
+			<selector xpath="ports/*/port"/>
+			<field xpath="type" />
+		</keyref>
+		<keyref name="Classname" refer="simmit:KnownClasses">
+			<selector xpath="parameter/*/class"/>
+			<field xpath="@name" />
+		</keyref>
+	</element>
+	<complexType name="parameter">
+		<sequence>
+			<group ref="simmit:headerInformationWithName"/>
+			<element name="include" minOccurs="0" type="simmit:includeFiles" />
+			<element name="export" type="string" />
+			<element name="define" minOccurs="0" type="simmit:parameterDefinition" />
+		</sequence>
+	</complexType>	
+</schema>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--generated at: 2006-04-16T21:06:00.72+02:00-->
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:simmit="https://proj.5nord.org/simmit"
+        xmlns:self="https://proj.5nord.org/simmit/types/Integer"
+        targetNamespace="https://proj.5nord.org/simmit/types/Integer">
+   <import namespace="https://proj.5nord.org/simmit"
+           schemaLocation="../../../../core/xml/moduleParameter.xsd"/>
+   <element name="Integer">
+      <complexType>
+         <sequence>
+            <group ref="self:headerSet"/>
+            <element name="include" type="self:include"/>
+            <element name="export" type="self:Integer"/>
+         </sequence>
+         <attribute name="imprints" type="string"/>
+      </complexType>
+   </element>
+   <group name="headerSet">
+      <sequence>
+         <element minOccurs="0" name="author" type="string"/>
+         <element minOccurs="0" name="version" type="string"/>
+         <element minOccurs="0" name="date" type="date"/>
+         <element minOccurs="0" name="description" type="string"/>
+      </sequence>
+   </group>
+   <complexType name="include">
+      <all/>
+   </complexType>
+   <complexType name="Integer">
+      <all>
+         <element name="value" type="simmit:int"/>
+      </all>
+      <attribute fixed="class" name="type"/>
+      <attribute default="" name="description"/>
+      <attribute fixed="Integer" name="classname"/>
+   </complexType>
+</schema>

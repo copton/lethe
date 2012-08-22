@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--generated at: 2006-04-17T19:04:18.285+02:00-->
+<module:Channel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:module="https://proj.5nord.org/simmit/modules/Channel"
+                xsi:schemaLocation="https://proj.5nord.org/simmit/modules/Channel Channel.xsd">
+   <author>alex</author>
+   <version>1.0</version>
+   <date>2006-03-06</date>
+   <type>Kanal</type>
+   <description/>
+   <include/>
+   <parameter>
+      <configuration/>
+      <settings>
+         <noiseReal type="class" classname="Noise">
+            <period type="int">0</period>
+            <amplifier type="int">0</amplifier>
+         </noiseReal>
+         <noiseImag type="class" classname="Noise">
+            <period type="int">0</period>
+            <amplifier type="int">0</amplifier>
+         </noiseImag>
+      </settings>
+   </parameter>
+   <ports>
+      <Input direction="input" type="Complex" blocksize="1" usedType="" description=""/>
+    
+      <Output direction="output" type="Complex" blocksize="1" usedType="" description=""/>
+    </ports>
+</module:Channel>

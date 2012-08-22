@@ -1,0 +1,80 @@
+<root>
+  <SimulationManagementTable>
+    <Status>
+      <size>91</size>
+      <variableName>status</variableName>
+    </Status>
+    <Benutzer>
+      <size>91</size>
+      <variableName>owner</variableName>
+    </Benutzer>
+    <Job>
+      <size>91</size>
+      <variableName>jobId</variableName>
+    </Job>
+    <Beschreibung>
+      <size>90</size>
+      <variableName>description</variableName>
+    </Beschreibung>
+    <Startzeit>
+      <size>91</size>
+      <variableName>startTime</variableName>
+    </Startzeit>
+    <Laufzeit>
+      <size>91</size>
+      <variableName>running</variableName>
+    </Laufzeit>
+  </SimulationManagementTable>
+  <SimulationManagement>
+    <refreshPeriod>300</refreshPeriod>
+    <filter />
+  </SimulationManagement>
+  <mainController>
+    <plugins>
+      <plugin>plugins.authentication.Authenticate</plugin>
+      <plugin>plugins.simManagement.SimulationManagement</plugin>
+      <plugin>plugins.editor.SimulationEditor</plugin>
+      <plugin>plugins.admin.UserManagement</plugin>
+      <plugin>plugins.moduleGeneration.ModuleGeneration</plugin>
+      <plugin>plugins.packageGeneration.PackageGeneration</plugin>
+      <plugin>plugins.plugins.PluginHandler</plugin>
+      <plugin>plugins.debugger.Debugger</plugin>
+    </plugins>
+  </mainController>
+  <mainWindow>
+    <windowSize>
+      <width>624</width>
+      <height>426</height>
+    </windowSize>
+    <windowPosition>
+      <xPos>354</xPos>
+      <yPos>46</yPos>
+    </windowPosition>
+    <menuBar>
+      <menu name="Lethe">
+        <menu name="new">
+          <item name="job" id="new:job" />
+          <item name="module" id="new:module" />
+          <item name="type" id="new:type" />
+        </menu>
+        <menu name="load">
+          <item name="job" id="load:job" />
+          <item name="module" id="load:module" />
+          <item name="type" id="load:type" />
+        </menu>
+        <item name="save" id="save" />
+        <item name="save all" id="saveAll" />
+        <item name="exit" id="exit" />
+      </menu>
+      <menu name="others">
+        <menu name="plugins">
+          <item name="add" id="plugin:add" />
+          <item name="remove" id="plugin:remove" />
+        </menu>
+      </menu>
+    </menuBar>
+  </mainWindow>
+  <Authentication>
+    <autologin>true</autologin>
+  </Authentication>
+</root>
